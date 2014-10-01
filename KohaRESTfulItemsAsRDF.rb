@@ -21,9 +21,9 @@ require 'net/http'
 
 class RESTfulAPIKohaItemsAsRDF
 
-  @base = "http://deichman.no/kohaitems/"
-  @itemBase = "http://deichman.no/items/"
-  @itemlistUrl = "http://knakk:8080/cgi-bin/koha/rest.pl/biblio/__id__/items"
+  @base = "http://example.com/kohaitems/"
+  @itemBase = "http://example.com/items/"
+  @itemlistUrl = "http://YOUR_KOHA_INSTANCE:8080/cgi-bin/koha/rest.pl/biblio/__id__/items"
 
   def self.load_data (id)
   	return JSON.parse (Net::HTTP.get(URI(@itemlistUrl.gsub(/__id__/,id))))
@@ -32,7 +32,7 @@ class RESTfulAPIKohaItemsAsRDF
   def self.rdf_from_title_number (id)
 
     bf = RDF::Vocabulary.new("http://bibframe.org/vocab/")
-    deichman = RDF::Vocabulary.new("http://deichman.no/vocab/")
+    example = RDF::Vocabulary.new("http://example.com/vocab/")
     frbr = RDF::Vocabulary.new("http://purl.org/vocab/frbr/core#")
     holding = RDF::Vocabulary.new("http://purl.org/ontology/holding#")
 
@@ -41,27 +41,27 @@ class RESTfulAPIKohaItemsAsRDF
 
     for k in load_data id do
 
-      branch = RDF::URI.new( :scheme => 'http', :host => 'deichman.no', :path => 'branch/' + k['homebranch'] )
+      branch = RDF::URI.new( :scheme => 'http', :host => 'example.com', :path => 'branch/' + k['homebranch'] )
       uri = RDF::Node.new
       graph.insert << [s, RDF.Bag, uri]
       graph.insert << [uri, RDF.type, frbr.Item]
       graph.insert << [uri, holding.label, k['itemcallnumber']]
-      graph.insert << [uri, deichman.barcode, k['barcode']]
-      graph.insert << [uri, deichman.heldBy, branch]
-      graph.insert << [uri, deichman.itemnumber, k['itemnumber']]
+      graph.insert << [uri, example.barcode, k['barcode']]
+      graph.insert << [uri, example.heldBy, branch]
+      graph.insert << [uri, example.itemnumber, k['itemnumber']]
 
       if ( k['onloan'].to_s == "" ) 
-      	graph.insert << [uri, bf.circulationStatus, deichman.Available]
+      	graph.insert << [uri, bf.circulationStatus, example.Available]
       else
-      	graph.insert << [uri, bf.circulationStatus, deichman.OnLoan]      	
+      	graph.insert << [uri, bf.circulationStatus, example.OnLoan]      	
       end
 
       if ( k['reserves'].to_s != "" ) 
-        graph.insert << [uri, deichman.reserves, k['reserves']]
+        graph.insert << [uri, example.reserves, k['reserves']]
       end
 
       if ( k['date_due'].to_s != "" ) 
-        graph.insert << [uri, deichman.dueDate, k['date_due']]
+        graph.insert << [uri, example.dueDate, k['date_due']]
       end
     end
     output = RDF::Writer.for(:turtle).buffer do |writer|
