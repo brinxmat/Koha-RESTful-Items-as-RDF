@@ -1,0 +1,33 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://deichman.no/kohaitems/x286467>
+    rdf:Bag [
+        <http://bibframe.org/vocab/circulationStatus> <http://deichman.no/vocab/OnLoan> ;
+        <http://deichman.no/vocab/barcode> "03010286467001" ;
+        <http://deichman.no/vocab/heldBy> <http://deichman.no/branch/hvmu> ;
+        <http://deichman.no/vocab/itemnumber> "196321" ;
+        <http://purl.org/ontology/holding#label> "dc F Sun" ;
+        a <http://purl.org/vocab/frbr/core#Item>
+    ], [
+        <http://bibframe.org/vocab/circulationStatus> <http://deichman.no/vocab/Available> ;
+        <http://deichman.no/vocab/barcode> "03010286467005" ;
+        <http://deichman.no/vocab/heldBy> <http://deichman.no/branch/hvmu> ;
+        <http://deichman.no/vocab/itemnumber> "196322" ;
+        <http://purl.org/ontology/holding#label> "dc F Sun" ;
+        a <http://purl.org/vocab/frbr/core#Item>
+    ], [
+        <http://bibframe.org/vocab/circulationStatus> <http://deichman.no/vocab/Available> ;
+        <http://deichman.no/vocab/barcode> "03010286467008" ;
+        <http://deichman.no/vocab/heldBy> <http://deichman.no/branch/hvmu> ;
+        <http://deichman.no/vocab/itemnumber> "196324" ;
+        <http://purl.org/ontology/holding#label> "dc F Sun" ;
+        a <http://purl.org/vocab/frbr/core#Item>
+    ], [
+        <http://bibframe.org/vocab/circulationStatus> <http://deichman.no/vocab/Available> ;
+        <http://deichman.no/vocab/barcode> "03010286467006" ;
+        <http://deichman.no/vocab/heldBy> <http://deichman.no/branch/frik> ;
+        <http://deichman.no/vocab/itemnumber> "196323" ;
+        <http://purl.org/ontology/holding#label> "dc F Sun" ;
+        a <http://purl.org/vocab/frbr/core#Item>
+    ] .
+
